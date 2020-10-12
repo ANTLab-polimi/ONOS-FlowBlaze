@@ -1,0 +1,12 @@
+{
+  "pktActions" : [
+    {
+      "action": "FlowBlaze.forward",
+      "id": 1
+    },
+    {
+      "action": "FlowBlaze.drop",
+      "id": 2
+    }
+  ]
+}

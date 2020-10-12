@@ -1,0 +1,51 @@
+# Copyright 2020 Daniele Moro <daniele.moro@polimi.it>
+#                Davide Sanvito <davide.sanvito@neclab.eu>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+version: "3"
+
+services:
+  mininetff:
+    image: dmoro92/p4mn:latest
+    volumes:
+      - ./:/mn_onos
+      - ./topo:/topo
+    privileged: true
+    ports:
+      - "50001:50001"
+      - "50002:50002"
+      - "50003:50003"
+      - "50004:50004"
+    entrypoint: "/mn_onos/topo/entrypoint.sh /mn_onos/topo/topo_full_fabric.py"
+    tty: true
+  onosff:
+    image: onosproject/onos:2.2.3
+    ports:
+      - "8181:8181"
+      - "8101:8101"
+    environment:
+      - ONOS_APPS=drivers,gui,openflow,segmentrouting,drivers.stratum,pipelines.fabric,drivers.bmv2
+    links:
+      - mininetff
+  guiff:
+    image: dmoro92/flask:latest
+    volumes:
+      - ../flowblaze.p4/gui:/flowblazeGui
+      - ./app/src/main/resources/:/p4src
+    ports:
+      - "8000:8000"
+    working_dir: /flowblazeGui
+    entrypoint: "python gui.py --debug --p4_file /p4src/fabric.p4 --json_file /p4src/p4c-out/fabric-flowblaze/bmv2/default/bmv2.json --onos_cfg"
+    links:
+      - onosff
