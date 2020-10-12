@@ -1,9 +1,0 @@
-*~
-*.class
-.classpath
-.project
-.settings
-.checkstyle
-target
-*.iml
-.idea

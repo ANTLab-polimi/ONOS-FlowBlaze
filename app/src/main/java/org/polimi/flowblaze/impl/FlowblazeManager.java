@@ -31,8 +31,6 @@ import org.onosproject.net.flow.criteria.PiCriterion;
 import org.onosproject.net.pi.model.PiActionId;
 import org.onosproject.net.pi.model.PiActionParamId;
 import org.onosproject.net.pi.model.PiMatchFieldId;
-import org.onosproject.net.pi.model.PiTableId;
-import org.onosproject.net.pi.model.PiTableModel;
 import org.onosproject.net.pi.runtime.PiAction;
 import org.onosproject.net.pi.runtime.PiActionParam;
 import org.onosproject.net.pi.runtime.PiTableAction;
@@ -46,7 +44,6 @@ import org.polimi.flowblaze.EfsmCondition;
 import org.polimi.flowblaze.EfsmMatch;
 import org.polimi.flowblaze.EfsmOperation;
 import org.polimi.flowblaze.FlowblazeService;
-import org.polimi.flowblaze.pipeconf.PipeconfLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

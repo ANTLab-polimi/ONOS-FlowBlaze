@@ -1,0 +1,13 @@
+{
+  "mac": "00:00:00:00:00:10",
+  "vlan": "-1",
+  "ipAddresses": [
+    "10.10.10.1"
+  ],
+  "locations": [
+    {
+      "elementId": "device:leaf1",
+      "port": "3"
+    }
+  ]
+}

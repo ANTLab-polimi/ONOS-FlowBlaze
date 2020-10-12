@@ -24,7 +24,7 @@ import java.util.List;
 public interface FlowblazeService {
 
     /**
-     * Set the FlowBlaze device ID
+     * Set the FlowBlaze device ID.
      * @param deviceId The device ID
      * @return True if value is accepted, False otherwise
      */
@@ -81,7 +81,7 @@ public interface FlowblazeService {
     boolean resetEfsmEntries();
 
     /**
-     * Return the set FlowBlaze device ID
+     * Return the set FlowBlaze device ID.
      * @return FlowBlaze device ID
      */
     DeviceId getFlowBlazeDeviceId();

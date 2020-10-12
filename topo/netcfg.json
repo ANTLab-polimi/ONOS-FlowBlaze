@@ -78,5 +78,40 @@
         }
       ]
     }
+  },
+  "hosts": {
+    "00:00:00:00:00:01/None": {
+      "basic": {
+        "ips": [
+          "10.0.0.1"
+        ],
+        "locations": [
+          "device:leaf1/1"
+        ],
+        "name": "h1"
+      }
+    },
+    "00:00:00:00:00:02/None": {
+      "basic": {
+        "ips": [
+          "10.0.1.1"
+        ],
+        "locations": [
+          "device:leaf1/2"
+        ],
+        "name": "h2"
+      }
+    },
+    "00:00:00:00:00:10/None": {
+      "basic": {
+        "ips": [
+          "10.10.10.1"
+        ],
+        "locations": [
+          "device:leaf1/3"
+        ],
+        "name": "h10"
+      }
+    }
   }
 }
