@@ -13,23 +13,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+onos_ip := localhost
+onos_port := 8181
+
 curr_dir := $(shell pwd)
+APP_FQDN := org.polimi.flowblaze
 APP_VERSION = 0.0.1-SNAPSHOT
 APP_NAME = flowblaze-app
+
 APP_OAR = app/target/${APP_NAME}-${APP_VERSION}.oar
 
 build-app:
 	mvn clean install
 
 $(APP_OAR):
-	$(error Missing app binary, run 'make app-build' first)
+	$(error Missing app binary, run 'make build' first)
 
 push-app: $(APP_OAR)
+	@# Equivalent of onos-app localhost reinstall! ${APP_OAR}
 	$(info ************ RELOADING ONOS APP ************)
-	onos-app localhost reinstall! ${APP_OAR}
+	curl -u onos:rocks -X DELETE http://${onos_ip}:${onos_port}/onos/v1/applications/${APP_FQDN}
+	curl -u onos:rocks -X POST -HContent-Type:application/octet-stream http://${onos_ip}:${onos_port}/onos/v1/applications?activate=true --data-binary @${APP_OAR}
 
 push-netcfg:
-	onos-netcfg localhost topo/netcfg.json
+	@# Equivalent of onos-netcfg localhost topo/netcfg.json
+	@# Check JSON
+	@cat topo/netcfg.json | python -m json.tool > /dev/null
+	@# Push netcfg
+	@curl -u onos:rocks -X POST -H 'Content-Type:application/json' "http://${onos_ip}:${onos_port}/onos/v1/network/configuration/" -d@topo/netcfg.json
 
 start:
 	docker-compose up -d
@@ -44,7 +55,11 @@ stop-full:
 	docker-compose -f docker-compose_full-fabric.yml -p full_fabric down
 
 push-netcfg-full:
-	onos-netcfg localhost topo/netcfg_full_fabric.json
+	@# Equivalent of onos-netcfg localhost topo/netcfg_full_fabric.json
+	@# Check JSON
+	@cat topo/netcfg.json | python -m json.tool > /dev/null
+	@# Push netcfg
+	@curl -u onos:rocks -X POST -H 'Content-Type:application/json' "http://${onos_ip}:${onos_port}/onos/v1/network/configuration/" -d@topo/netcfg_full_fabric.json
 
 onos-log:
 	docker-compose logs -f onos
@@ -135,3 +150,34 @@ uc1-test-ping:
 	@docker-compose exec mininet /bin/sh -c '/mininet/util/m h1 ping 10.0.1.1 -c 12'
 
 uc2-setup: push-app push-netcfg
+
+
+# From: https://github.com/opennetworkinglab/stratum-onos-demo/blob/master/app/Makefile
+maven_img := maven:3.6.3-jdk-11-slim
+curr_dir_sha := $(shell echo -n "$(curr_dir)" | shasum | cut -c1-7)
+
+mvn_build_container_name := mvn-build-${curr_dir_sha}
+
+
+build: _create_mvn_container _mvn_package
+	$(info *** ONOS app .oar package created succesfully)
+	@ls -1 app/target/*.oar
+
+# Reuse the same container to persist mvn repo cache.
+_create_mvn_container:
+	@if ! docker container ls -a --format '{{.Names}}' | grep -q ${mvn_build_container_name} ; then \
+		docker create -v ${curr_dir}:/mvn-src -w /mvn-src  --user "$(id -u):$(id -g)" --name ${mvn_build_container_name} ${maven_img} mvn clean install; \
+	fi
+
+_mvn_package:
+	$(info *** Building ONOS app...)
+	@mkdir -p target
+	@docker start -a -i ${mvn_build_container_name}
+
+clean:
+	@-docker rm ${mvn_build_container_name} > /dev/null
+	@-rm -rf target
+	@-rm -rf app/target
+	@-rm -rf api/target
+
+
