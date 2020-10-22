@@ -1,7 +1,8 @@
 # ONOS FlowBlaze
-Integration of `FlowBlaze.p4` with ONOS controller.
+Integration of [FlowBlaze.p4](https://github.com/ANTLab-polimi/flowblaze.p4) 
+with the ONOS SDN controller.
 
-The integration is composed of a modified `fabric.p4` program and a new ONOS 
+The integration is composed of a modified `fabric.p4` program and a new ONOS
 application providing a new pipeconf (`org.polimi.fabric-flowblaze`).
 
 ## Requirements
@@ -30,10 +31,10 @@ be used for both use cases.
 ### How to develop a new use case
 TODO: improve documentation on how to develop a new use case with a step-by-step guide.
 
-To develop a new use case you have to modify the compile-time configuration of 
+To develop a new use case you have to modify the compile-time configuration of
 FlowBlaze. 
-Take a look at the [`fabric.p4`](app/src/main/resources/fabric.p4) file, 
-where you can modify the following `#define` pre-processor directives: `FLOW_SCOPE`, 
+Take a look at the [fabric.p4](app/src/main/resources/fabric.p4) file,
+where you can modify the following #define pre-processor directives: `FLOW_SCOPE`,
 `METADATA_OPERATION_COND`, `EFSM_MATCH_FIELDS`, `CUSTOM_ACTIONS_DEFINITION`,
 `CUSTOM_ACTIONS_DEFINITION`, `CUSTOM_ACTIONS_DECLARATION`, `CONTEXT_TABLE_SIZE`.
 More information on the meaning of these define can be found in the 
@@ -41,3 +42,32 @@ More information on the meaning of these define can be found in the
 After that you will have to re-compile the `fabric.p4+flowblaze` pipeline running
 `make` in the `app/src/main/resources` folder. No modification will be required 
 to the ONOS application, only a new OAR build is required (`make build` in the root of this project).
+
+## Reference
+
+If you use FlowBlaze.p4 and the ONOS integration for your research and/or other 
+publications, please cite
+```
+
+```
+
+## Contact
+
+### Support
+
+If you have any questions, please use GitHub's [issue system](https://github.com/ANTLab-polimi/ONOS-flowblaze/issues)
+
+### Contribute
+
+Your contributions are very welcome! Please fork the GitHub repository and create a pull request.
+
+### Lead developers
+
+Daniele Moro
+* Mail <daniele (dot) moro (at) polimi (dot) it>
+* Github: [@daniele-moro](https://github.com/daniele-moro)
+
+Davide Sanvito
+* Mail: <davide (dot) sanvito (at) neclab (dot) eu>
+* GitHub: [@DavideSanvito](https://github.com/DavideSanvito)
+
