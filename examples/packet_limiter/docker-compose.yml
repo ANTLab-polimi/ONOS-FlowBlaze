@@ -40,8 +40,8 @@ services:
   gui:
     image: dmoro92/flask:latest
     volumes:
-      - ./flowblaze.p4/gui:/flowblazeGui
-      - ./app/src/main/resources/:/p4src
+      - ../../flowblaze.p4/gui:/flowblazeGui
+      - ../../app/src/main/resources/:/p4src
     ports:
       - "8000:8000"
     working_dir: /flowblazeGui

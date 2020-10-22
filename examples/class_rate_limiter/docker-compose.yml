@@ -16,7 +16,7 @@
 version: "3"
 
 services:
-  mininetff:
+  mininet:
     image: dmoro92/p4mn:latest
     volumes:
       - ./topo:/topo
@@ -26,9 +26,9 @@ services:
       - "50002:50002"
       - "50003:50003"
       - "50004:50004"
-    entrypoint: "/topo/entrypoint.sh /topo/topo_full_fabric.py"
+    entrypoint: "/topo/entrypoint.sh /topo/topo.py"
     tty: true
-  onosff:
+  onos:
     image: onosproject/onos:2.2.3
     ports:
       - "8181:8181"
@@ -36,15 +36,15 @@ services:
     environment:
       - ONOS_APPS=drivers,gui,openflow,segmentrouting,drivers.stratum,pipelines.fabric,drivers.bmv2
     links:
-      - mininetff
-  guiff:
+      - mininet
+  gui:
     image: dmoro92/flask:latest
     volumes:
-      - ./flowblaze.p4/gui:/flowblazeGui
-      - ./app/src/main/resources/:/p4src
+      - ../../flowblaze.p4/gui:/flowblazeGui
+      - ../../app/src/main/resources/:/p4src
     ports:
       - "8000:8000"
     working_dir: /flowblazeGui
-    entrypoint: "python gui.py --debug --p4_file /p4src/fabric.p4 --json_file /p4src/p4c-out/fabric-flowblaze/bmv2/default/bmv2.json --onos_cfg"
+    entrypoint: "python gui.py --debug --p4_file /p4src/fabric.p4 --json_file /p4src/p4c-out/fabric-flowblaze/bmv2/default/bmv2.json --onos_cfg --debug"
     links:
-      - onosff
+      - onos

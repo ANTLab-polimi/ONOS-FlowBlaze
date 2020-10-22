@@ -1,0 +1,103 @@
+# Copyright 2020 Daniele Moro <daniele.moro@polimi.it>
+#                Davide Sanvito <davide.sanvito@neclab.eu>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+start:
+	docker-compose up -d
+
+stop:
+	docker-compose down
+
+onos-log:
+	docker-compose logs -f onos
+
+onos-cli:
+	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 8101 onos@localhost
+
+mn-log:
+	docker-compose logs -f mininet
+
+mn-cli:
+	$(info ******* Ctrl+A Ctrl+D to detach *******)
+	docker-compose exec mininet screen -Urx -S cli
+
+gui-log:
+	docker-compose logs -f gui
+
+push-netcfg:
+	../../utils/push-netcfg.sh localhost 8181 ./topo/netcfg.json
+
+push-app:
+	cd ../../ && make push-app
+
+leaf1-shell:
+	$(info *** CLI Leaf1 )
+	@docker-compose exec mininet /bin/sh -c 'simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port)'
+
+leaf1-clear-regs:
+	$(info *** Clear registers for leaf1)
+	@echo "    reg_state"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_reset reg_state" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port) > /dev/null'
+	@echo "    reg_R0"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_reset reg_R0" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port) > /dev/null'
+	@echo "    reg_R1"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_reset reg_R1" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port) > /dev/null'
+	@echo "    reg_R2"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_reset reg_R2" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port) > /dev/null'
+	@echo "    reg_R3"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_reset reg_R3" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port) > /dev/null'
+	@echo "    reg_G"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_reset reg_G" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port) > /dev/null'
+
+leaf1-read-regs:
+	$(info *** Read registers for S1)
+	@echo "    reg_state"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_read reg_state" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port)'
+	@echo "    reg_R0"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_read reg_R0" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port)'
+	@echo "    reg_R1"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_read reg_R1" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port)'
+	@echo "    reg_R2"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_read reg_R2" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port)'
+	@echo "    reg_R3"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_read reg_R3" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port)'
+	@echo "    reg_G"
+	@docker-compose exec mininet /bin/sh -c 'echo "register_read reg_G" | simple_switch_CLI --thrift-port $$(cat /tmp/bmv2-leaf1-thrift-port)'
+
+reset-flowblaze-onos:
+	curl -X GET -u onos:rocks 'http://localhost:8181/onos/flowblaze/resetFlowblaze'
+
+reset: reset-flowblaze-onos leaf1-clear-regs
+
+h1-cli:
+	docker-compose exec mininet /mininet/util/m h1
+
+h1-test:
+	@docker-compose exec mininet /bin/sh -c '/topo/h1-iperf-test_udp.sh'
+
+h2-cli:
+	docker-compose exec mininet /mininet/util/m h2
+
+h2-test:
+	@docker-compose exec mininet /bin/sh -c '/topo/h2-iperf-test_udp.sh'
+
+h10-cli:
+	docker-compose exec mininet /mininet/util/m h10
+
+pingall:
+	@docker-compose exec mininet /mininet/util/m h10 'ping 10.10.10.254 -c1'
+	@docker-compose exec mininet /mininet/util/m h1 'ping 10.0.0.254 -c1'
+	@docker-compose exec mininet /mininet/util/m h2 'ping 10.0.1.254 -c1'
+
+setup: push-netcfg push-app

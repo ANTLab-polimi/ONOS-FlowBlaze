@@ -31,13 +31,13 @@ h10 = net.addHost('h10', cls=P4Host, ip='10.10.10.1/24', mac="00:00:00:00:00:10"
 
 # SWITCHES
 info('*** Adding switches\n')
-s1 = net.addSwitch(name='s1', loglevel='debug', pktdump=False)
+leaf1 = net.addSwitch(name='leaf1', loglevel='debug', pktdump=False)
 
 # LINKS
 info('*** Creating links\n')
-net.addLink(h1, s1)
-net.addLink(h2, s1)
-net.addLink(h10, s1)
+net.addLink(h1, leaf1)
+net.addLink(h2, leaf1)
+net.addLink(h10, leaf1)
 
 info('*** Starting network\n')
 

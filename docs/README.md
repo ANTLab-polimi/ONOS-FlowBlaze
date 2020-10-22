@@ -5,8 +5,9 @@ The integration is composed of a modified `fabric.p4` program and a new ONOS
 application providing a new pipeconf (`org.polimi.fabric-flowblaze`).
 
 ## Requirements
-- `docker`
+- `docker` and `docker-compose`
 - `make`
+- `python`
 
 ## Build ONOS app
 The ONOS app is built in a Docker container with Maven. The target will create a Docker
@@ -16,15 +17,15 @@ container that will be started when building the ONOS app (in this way we can pe
 
 When needed you can run `make clean` to destroy the container and clear the Maven cache.
 
+## ONOS Pipeconf
+![](pipeconf_onos.png)
+
 ## Use cases
 Two use cases are available. The same ONOS application and the same pipeline can 
 be used for both use cases.
 
-### Packet limiter
-TODO: add instruction to run the use case
-
-### Multi-Class Rate Limiter
-TODO: add instruction to run the use case
+- [Packet Limiter](examples/packet_limiter)
+- [Multi-Class Rate Limiter](examples/class_rate_limiter)
 
 ### How to develop a new use case
 TODO: improve documentation on how to develop a new use case with a step-by-step guide.
