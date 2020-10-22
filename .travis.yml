@@ -1,0 +1,19 @@
+os: linux
+dist: trusty
+language: generic
+services:
+  - docker
+
+branches:
+  only:
+    - master
+
+jobs:
+  include:
+    - stage: build-app
+      name: "Build ONOS app"
+      script:
+        - make build
+
+stages:
+  - build-app
