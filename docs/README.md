@@ -10,6 +10,9 @@ application providing a new pipeconf (`org.polimi.fabric-flowblaze`).
 - `make`
 - `python`
 
+After cloning the repository remember to initialize submodules with the command
+`git submodule update --recursive` or clone with the options `--recursive`.
+
 ## Build ONOS app
 The ONOS app is built in a Docker container with Maven. The target will create a Docker
 container that will be started when building the ONOS app (in this way we can persist the Maven cache).
@@ -48,7 +51,15 @@ to the ONOS application, only a new OAR build is required (`make build` in the r
 If you use FlowBlaze.p4 and the ONOS integration for your research and/or other 
 publications, please cite
 ```
-
+FlowBlaze.p4: a library for quick prototyping of stateful SDN applications in P4
+D. Moro, D. Sanvito, A. Capone
+IEEE NFV-SDN 2020
+```
+and 
+```
+Developing EFSM-based stateful applications with FlowBlaze.p4 and ONOS
+D. Moro, D. Sanvito, A. Capone
+EuroP4 '20 Workshop (ACM CoNEXT 2020)
 ```
 
 ## Contact
@@ -66,8 +77,3 @@ Your contributions are very welcome! Please fork the GitHub repository and creat
 Daniele Moro
 * Mail <daniele (dot) moro (at) polimi (dot) it>
 * Github: [@daniele-moro](https://github.com/daniele-moro)
-
-Davide Sanvito
-* Mail: <davide (dot) sanvito (at) neclab (dot) eu>
-* GitHub: [@DavideSanvito](https://github.com/DavideSanvito)
-
