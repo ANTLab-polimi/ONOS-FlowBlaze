@@ -54,4 +54,5 @@ and obtain a similar output:
 ```
 The 2 hosts, being part of two different subnets have different associated rates.
 
-## [Useful make Targets](../../docs/useful_make_targets.md
+## Useful make Targets
+[Documentation](../../docs/useful_make_targets.md

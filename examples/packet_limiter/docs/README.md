@@ -37,6 +37,7 @@ make test-ping
 ```
 The ping should fail after 10 successful pings.
 
-## [Useful make Targets](../../docs/useful_make_targets.md)
+## Useful make Targets
+[Documentation](../../docs/useful_make_targets.md
 
 
