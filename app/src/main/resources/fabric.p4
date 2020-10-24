@@ -45,7 +45,7 @@
 
 #include "flowblaze_lib/flowblaze_metadata.p4"
 #include "include/header.p4"
-#include "flowblaze_lib/flowblaze_loop.p4"
+#include "flowblaze_lib/flowblaze.p4"
 
 #include "include/size.p4"
 #include "include/control/filtering.p4"
@@ -115,8 +115,7 @@ control FabricIngress (inout parsed_headers_t hdr,
 #endif // WITH_BNG
 
         // Last apply FlowBlaze Loop.
-        // TODO: should we apply the FlowBlazeLoop before?
-        FlowBlazeLoop.apply(hdr, fabric_metadata, standard_metadata);
+        FlowBlaze.apply(hdr, fabric_metadata, standard_metadata);
     }
 }
 

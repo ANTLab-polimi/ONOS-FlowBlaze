@@ -17,7 +17,7 @@ mkdir -p ${OUT_DIR}/graphs
 echo
 echo "## Compiling profile ${PROFILE} in ${OUT_DIR}..."
 
-dockerImage=opennetworking/p4c:stable
+dockerImage=opennetworking/p4c:stable@sha256:5c2649442de52c6fbfeb4e0f198f4eba7f2b41c8b33b63cced5eb10e018e49b3
 dockerRun="docker run --rm -w ${SRC_DIR} -v ${SRC_DIR}:${SRC_DIR} -v ${OUT_DIR}:${OUT_DIR} ${dockerImage}"
 
 # Generate preprocessed P4 source (for debugging).

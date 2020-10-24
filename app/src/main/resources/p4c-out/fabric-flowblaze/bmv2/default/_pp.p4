@@ -509,7 +509,7 @@ control UpdateLogic(inout parsed_headers_t hdr, inout flowblaze_t flowblaze_meta
     }
 }
 
-control FlowBlazeLoop(inout parsed_headers_t hdr, inout fabric_metadata_t meta, inout standard_metadata_t standard_metadata) {
+control FlowBlaze(inout parsed_headers_t hdr, inout fabric_metadata_t meta, inout standard_metadata_t standard_metadata) {
     @name(".FlowBlaze.define_operation_update_state") action define_operation_update_state(bit<16> state, bit<8> operation_0, bit<8> result_0, bit<8> op1_0, bit<8> op2_0, bit<32> operand1_0, bit<32> operand2_0, bit<8> operation_1, bit<8> result_1, bit<8> op1_1, bit<8> op2_1, bit<32> operand1_1, bit<32> operand2_1, bit<8> operation_2, bit<8> result_2, bit<8> op1_2, bit<8> op2_2, bit<32> operand1_2, bit<32> operand2_2, bit<8> pkt_action) {
         meta.flowblaze_metadata.state = state;
         meta.flowblaze_metadata.pkt_action = pkt_action;
@@ -1185,7 +1185,7 @@ control FabricIngress(inout parsed_headers_t hdr, inout fabric_metadata_t fabric
             next.apply(hdr, fabric_metadata, standard_metadata);
             port_counters_control.apply(hdr, fabric_metadata, standard_metadata);
         }
-        FlowBlazeLoop.apply(hdr, fabric_metadata, standard_metadata);
+        FlowBlaze.apply(hdr, fabric_metadata, standard_metadata);
     }
 }
 
