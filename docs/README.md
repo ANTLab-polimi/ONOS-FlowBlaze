@@ -9,6 +9,7 @@ application providing a new pipeconf (`org.polimi.fabric-flowblaze`).
 - `docker` and `docker-compose`
 - `make`
 - `python`
+- `ssh` and `curl`
 
 After cloning the repository remember to initialize submodules with the command
 `git submodule update --recursive` or clone with the options `--recursive`.
