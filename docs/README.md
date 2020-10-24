@@ -28,8 +28,8 @@ When needed you can run `make clean` to destroy the container and clear the Mave
 Two use cases are available. The same ONOS application and the same pipeline can 
 be used for both use cases.
 
-- [Packet Limiter](examples/packet_limiter)
-- [Multi-Class Rate Limiter](examples/class_rate_limiter)
+- [Packet Limiter](../examples/packet_limiter)
+- [Multi-Class Rate Limiter](../examples/class_rate_limiter)
 
 ### How to develop a new use case
 TODO: improve documentation on how to develop a new use case with a step-by-step guide.
