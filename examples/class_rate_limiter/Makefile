@@ -13,8 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+curr_dir := $(shell pwd)
+
 start:
-	TOPO_FOLDER=${curr_dir}/topo TOPO_FILE=${curr_dir}/topo/topo.py docker-compose -f ../utils/docker-compose.yml --env-file ../utils/.env up -d
+	TOPO_FOLDER=${curr_dir}/topo TOPO_FILE=${curr_dir}/topo/topo.py docker-compose -f ../utils/docker-compose.yml --env-file ../utils/.env up  -d
 
 stop:
 	docker-compose -f ../utils/docker-compose.yml down
@@ -84,13 +86,13 @@ h1-cli:
 	docker-compose -f ../utils/docker-compose.yml exec mininet /mininet/util/m h1
 
 h1-test:
-	@docker-compose -f ../utils/docker-compose.yml exec mininet /bin/sh -c '/topo/h1-iperf-test_udp.sh'
+	@docker-compose -f ../utils/docker-compose.yml exec mininet /bin/sh -c '${curr_dir}/topo/h1-iperf-test_udp.sh'
 
 h2-cli:
 	docker-compose -f ../utils/docker-compose.yml exec mininet /mininet/util/m h2
 
 h2-test:
-	@docker-compose -f ../utils/docker-compose.yml exec mininet /bin/sh -c '/topo/h2-iperf-test_udp.sh'
+	@docker-compose -f ../utils/docker-compose.yml exec mininet /bin/sh -c '${curr_dir}/topo/h2-iperf-test_udp.sh'
 
 h10-cli:
 	docker-compose -f ../utils/docker-compose.yml exec mininet /mininet/util/m h10
