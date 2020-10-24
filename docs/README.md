@@ -12,7 +12,7 @@ application providing a new pipeconf (`org.polimi.fabric-flowblaze`).
 - `ssh` and `curl`
 
 After cloning the repository remember to initialize submodules with the command
-`git submodule update --recursive` or clone with the options `--recursive`.
+`git submodule update --init --recursive` or clone with the options `--recursive`.
 
 ## Build ONOS app
 The ONOS app is built in a Docker container with Maven. The target will create a Docker
