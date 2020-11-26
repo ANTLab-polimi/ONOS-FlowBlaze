@@ -19,7 +19,7 @@ start:
 	TOPO_FOLDER=${curr_dir}/topo TOPO_FILE=${curr_dir}/topo/topo.py docker-compose -f ../utils/docker-compose.yml --env-file ../utils/.env up  -d
 
 stop:
-	docker-compose -f ../utils/docker-compose.yml down
+	docker-compose -f ../utils/docker-compose.yml down -t0
 
 onos-log:
 	docker-compose -f ../utils/docker-compose.yml logs -f onos
@@ -89,7 +89,7 @@ h2-cli:
 	docker-compose -f ../utils/docker-compose.yml exec mininet /mininet/util/m h2
 
 test-ping:
-	@docker-compose -f ../utils/docker-compose.yml exec mininet /bin/sh -c '/mininet/util/m h1 ping 10.0.1.1 -c 12'
+	@docker-compose -f ../utils/docker-compose.yml exec mininet /bin/sh -c '/mininet/util/m h1 ping 10.10.0.1 -c 12'
 
 setup: push-netcfg push-app
 	# Disable LLDP Link Provider
@@ -97,3 +97,4 @@ setup: push-netcfg push-app
 	# Push hosts
 	curl -i -X POST -H 'Content-Type: application/json' --data-binary @topo/h1.json -u onos:rocks 'http://localhost:8181/onos/v1/hosts'
 	curl -i -X POST -H 'Content-Type: application/json' --data-binary @topo/h2.json -u onos:rocks 'http://localhost:8181/onos/v1/hosts'
+	../../utils/push-netcfg.sh localhost 8181 ./topo/links.json

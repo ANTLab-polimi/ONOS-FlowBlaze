@@ -19,7 +19,7 @@ start:
 	TOPO_FOLDER=${curr_dir}/topo TOPO_FILE=${curr_dir}/topo/topo.py docker-compose -f ../utils/docker-compose.yml --env-file ../utils/.env up  -d
 
 stop:
-	docker-compose -f ../utils/docker-compose.yml down
+	docker-compose -f ../utils/docker-compose.yml down -t0
 
 onos-log:
 	docker-compose -f ../utils/docker-compose.yml logs -f onos
