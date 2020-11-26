@@ -3,7 +3,7 @@
     "device:leaf1": {
       "ports": {
         "1": {
-          "name": "s1-eth1",
+          "name": "s11-eth1",
           "speed": 10000,
           "enabled": true,
           "number": 1,
@@ -11,10 +11,18 @@
           "type": "copper"
         },
         "2": {
-          "name": "s1-eth2",
+          "name": "s11-eth2",
           "speed": 10000,
           "enabled": true,
           "number": 2,
+          "removed": false,
+          "type": "copper"
+        },
+        "3": {
+          "name": "s11-eth3",
+          "speed": 10000,
+          "enabled": true,
+          "number": 3,
           "removed": false,
           "type": "copper"
         }
@@ -26,12 +34,125 @@
       },
       "segmentrouting": {
         "name": "leaf1",
-        "ipv4NodeSid": 100,
-        "ipv4Loopback": "192.168.0.100",
-        "ipv6NodeSid": 101,
-        "ipv6Loopback": "2000::c0a8:0100",
-        "routerMac": "00:00:00:00:01:00",
+        "ipv4NodeSid": 111,
+        "ipv4Loopback": "192.168.0.11",
+        "ipv6NodeSid": 211,
+        "ipv6Loopback": "2000::c0a8:0111",
+        "routerMac": "00:00:00:00:11:00",
         "isEdgeRouter": true,
+        "adjacencySids": []
+      }
+    },
+    "device:leaf2": {
+      "ports": {
+        "1": {
+          "name": "s12-eth1",
+          "speed": 10000,
+          "enabled": true,
+          "number": 1,
+          "removed": false,
+          "type": "copper"
+        },
+        "2": {
+          "name": "s12-eth2",
+          "speed": 10000,
+          "enabled": true,
+          "number": 2,
+          "removed": false,
+          "type": "copper"
+        },
+        "3": {
+          "name": "s12-eth3",
+          "speed": 10000,
+          "enabled": true,
+          "number": 3,
+          "removed": false,
+          "type": "copper"
+        }
+      },
+      "basic": {
+        "managementAddress": "grpc://mininet:50002?device_id=1",
+        "driver": "bmv2",
+        "pipeconf": "org.onosproject.pipelines.fabric"
+      },
+      "segmentrouting": {
+        "name": "leaf2",
+        "ipv4NodeSid": 112,
+        "ipv4Loopback": "192.168.0.12",
+        "ipv6NodeSid": 212,
+        "ipv6Loopback": "2000::c0a8:0112",
+        "routerMac": "00:00:00:00:12:00",
+        "isEdgeRouter": true,
+        "adjacencySids": []
+      }
+    },
+    "device:spine1": {
+      "ports": {
+        "1": {
+          "name": "s21-eth1",
+          "speed": 10000,
+          "enabled": true,
+          "number": 1,
+          "removed": false,
+          "type": "copper"
+        },
+        "2": {
+          "name": "s21-eth2",
+          "speed": 10000,
+          "enabled": true,
+          "number": 2,
+          "removed": false,
+          "type": "copper"
+        }
+      },
+      "basic": {
+        "managementAddress": "grpc://mininet:50003?device_id=1",
+        "driver": "bmv2",
+        "pipeconf": "org.onosproject.pipelines.fabric"
+      },
+      "segmentrouting": {
+        "name": "spine1",
+        "ipv4NodeSid": 121,
+        "ipv4Loopback": "192.168.0.21",
+        "ipv6NodeSid": 221,
+        "ipv6Loopback": "2000::c0a8:0121",
+        "routerMac": "00:00:00:00:21:00",
+        "isEdgeRouter": false,
+        "adjacencySids": []
+      }
+    },
+    "device:spine2": {
+      "ports": {
+        "1": {
+          "name": "s22-eth1",
+          "speed": 10000,
+          "enabled": true,
+          "number": 1,
+          "removed": false,
+          "type": "copper"
+        },
+        "2": {
+          "name": "s22-eth2",
+          "speed": 10000,
+          "enabled": true,
+          "number": 2,
+          "removed": false,
+          "type": "copper"
+        }
+      },
+      "basic": {
+        "managementAddress": "grpc://mininet:50004?device_id=1",
+        "driver": "bmv2",
+        "pipeconf": "org.onosproject.pipelines.fabric"
+      },
+      "segmentrouting": {
+        "name": "spine2",
+        "ipv4NodeSid": 122,
+        "ipv4Loopback": "192.168.0.22",
+        "ipv6NodeSid": 222,
+        "ipv6Loopback": "2000::c0a8:0122",
+        "routerMac": "00:00:00:00:22:00",
+        "isEdgeRouter": false,
         "adjacencySids": []
       }
     }
@@ -48,14 +169,14 @@
         }
       ]
     },
-    "device:leaf1/2": {
+    "device:leaf2/1": {
       "interfaces": [
         {
           "name": "h2",
           "ips": [
-            "10.0.1.254/24"
+            "10.10.0.254/24"
           ],
-          "vlan-untagged": 11
+          "vlan-untagged": 13
         }
       ]
     }
@@ -75,10 +196,10 @@
     "00:00:00:00:00:02/None": {
       "basic": {
         "ips": [
-          "10.0.1.1"
+          "10.10.0.1"
         ],
         "locations": [
-          "device:leaf1/2"
+          "device:leaf2/1"
         ],
         "name": "h2"
       }

@@ -19,9 +19,31 @@ make target to push the FlowBlaze ONOS app and the network configuration:
 make setup
 ```
 
-After that, the switch and hosts should appear in the ONOS GUI:
+After that, the switches and hosts should appear in the ONOS GUI:
 ![](packet_limiter_onos_gui.png)
 
+We can try to ping the hosts and the ping should be successful as expected:
+```
+$ make test-ping 
+PING 10.10.0.1 (10.10.0.1) 56(84) bytes of data.
+64 bytes from 10.10.0.1: icmp_seq=1 ttl=62 time=31.0 ms
+64 bytes from 10.10.0.1: icmp_seq=2 ttl=62 time=7.01 ms
+64 bytes from 10.10.0.1: icmp_seq=3 ttl=62 time=20.2 ms
+64 bytes from 10.10.0.1: icmp_seq=4 ttl=62 time=10.7 ms
+64 bytes from 10.10.0.1: icmp_seq=5 ttl=62 time=20.8 ms
+64 bytes from 10.10.0.1: icmp_seq=6 ttl=62 time=21.1 ms
+64 bytes from 10.10.0.1: icmp_seq=7 ttl=62 time=16.1 ms
+64 bytes from 10.10.0.1: icmp_seq=8 ttl=62 time=15.9 ms
+64 bytes from 10.10.0.1: icmp_seq=9 ttl=62 time=16.4 ms
+64 bytes from 10.10.0.1: icmp_seq=10 ttl=62 time=16.2 ms
+64 bytes from 10.10.0.1: icmp_seq=11 ttl=62 time=16.8 ms
+64 bytes from 10.10.0.1: icmp_seq=12 ttl=62 time=6.66 ms
+
+--- 10.10.0.1 ping statistics ---
+12 packets transmitted, 12 received, 0% packet loss, time 11014ms
+rtt min/avg/max/mdev = 6.662/16.614/31.011/6.367 ms
+
+```
 Now we can draw the EFSM in the EFSM GUI:
 ![](packet_limiter_efsm_gui.png)
 

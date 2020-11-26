@@ -1,0 +1,16 @@
+{
+  "links": {
+    "device:leaf1/2-device:spine1/1": {
+      "basic": {}
+    },
+    "device:leaf1/3-device:spine2/1": {
+      "basic": {}
+    },
+    "device:leaf2/2-device:spine1/2": {
+      "basic": {}
+    },
+    "device:leaf2/3-device:spine2/2": {
+      "basic": {}
+    }
+  }
+}

@@ -26,22 +26,36 @@ net = Mininet(switch=ONOSBmv2Switch)
 # HOSTS
 info('*** Adding hosts\n')
 h1 = net.addHost('h1', cls=P4Host, ip='10.0.0.1/24', mac="00:00:00:00:00:01")
-h2 = net.addHost('h2', cls=P4Host, ip='10.0.1.1/24', mac="00:00:00:00:00:02")
+h2 = net.addHost('h2', cls=P4Host, ip='10.10.0.1/24', mac="00:00:00:00:00:10")
 
 # SWITCHES
 info('*** Adding switches\n')
-leaf1 = net.addSwitch(name='leaf1', loglevel='debug', pktdump=False)
+# Leaf
+s11 = net.addSwitch(name='s11', loglevel='info', pktdump=False)
+s12 = net.addSwitch(name='s12', loglevel='info', pktdump=False)
+
+# Spine
+s21 = net.addSwitch(name='s21', loglevel='info', pktdump=False)
+s22 = net.addSwitch(name='s22', loglevel='info', pktdump=False)
 
 # LINKS
 info('*** Creating links\n')
-net.addLink(h1, leaf1)
-net.addLink(h2, leaf1)
+net.addLink(h1, s11)
+net.addLink(h2, s12)
+
+net.addLink(s11,s21)
+net.addLink(s11,s22)
+
+net.addLink(s12,s21)
+net.addLink(s12,s22)
+
+
 
 info('*** Starting network\n')
 
 net.start()
 h1.cmd("ip route add default via 10.0.0.254")
-h2.cmd("ip route add default via 10.0.1.254")
+h2.cmd("ip route add default via 10.10.0.254")
 # ARP managed via ARP Proxy in ONOS
 
 info('*** Running CLI\n')
