@@ -42,7 +42,21 @@ make h1-test
 ```
 and obtain a similar output:
 ```
-
+*** Opening iperf server on H10
+    PID: 152
+*** Opening iperf client on H1
+------------------------------------------------------------
+Client connecting to 10.10.10.1, UDP port 5001
+Sending 1470 byte datagrams, IPG target: 5742.19 us (kalman adjust)
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  5] local 10.0.0.1 port 56115 connected with 10.10.10.1 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  5]  0.0-20.0 sec  4.88 MBytes  2.05 Mbits/sec
+[  5] Sent 3484 datagrams
+[  5] Server Report:
+[  5]  0.0-20.3 sec  2.36 MBytes   975 Kbits/sec   0.000 ms 1803/ 3483 (0%)
+*** Killing iperf server on H10
 ```
 and
 ```
@@ -50,7 +64,21 @@ make h2-test
 ```
 and obtain a similar output:
 ```
-
+*** Opening iperf server on H10
+    PID: 184
+*** Opening iperf client on H2
+------------------------------------------------------------
+Client connecting to 10.10.10.1, UDP port 5002
+Sending 1470 byte datagrams, IPG target: 4593.75 us (kalman adjust)
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  5] local 10.0.1.1 port 38511 connected with 10.10.10.1 port 5002
+[ ID] Interval       Transfer     Bandwidth
+[  5]  0.0-20.0 sec  6.11 MBytes  2.56 Mbits/sec
+[  5] Sent 4355 datagrams
+[  5] Server Report:
+[  5]  0.0-20.3 sec  4.68 MBytes  1.94 Mbits/sec   0.000 ms 1014/ 4354 (0%)
+*** Killing iperf server on H10
 ```
 The 2 hosts, being part of two different subnets have different associated rates.
 
